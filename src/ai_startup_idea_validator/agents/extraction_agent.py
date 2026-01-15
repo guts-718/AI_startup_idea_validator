@@ -1,7 +1,7 @@
 from typing import Dict, Any, List
 from crewai import Agent
 from pydantic import ValidationError
-from models.startup_idea import StartupIdea
+from ai_startup_idea_validator.models.startup_idea import StartupIdea
 
 class ExtractionResult:
     def __init__(self, success:bool, data: StartupIdea | None = None, error: str | None=None, missing_required:List[str] | None=None, inferred_fields: List[str] | None = None, extraction_confidence: str| None=None):

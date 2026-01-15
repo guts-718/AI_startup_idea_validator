@@ -1,6 +1,6 @@
 from crewai import Task
 from pydantic_core import ValidationError
-from models.startup_idea import StartupIdea
+from ai_startup_idea_validator.models.startup_idea import StartupIdea
 
 from agents.extraction_logic import (
     validate_required_fields,
