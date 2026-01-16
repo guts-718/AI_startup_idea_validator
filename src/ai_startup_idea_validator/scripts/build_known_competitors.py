@@ -6,7 +6,7 @@ from pathlib import Path
 
 
 WIKI_PAGES = {
-    "fintech": "https://en.wikipedia.org/wiki/List_of_fintech_companies",
+    "fintech": "https://en.wikipedia.org/w/index.php?fulltext=1&search=List+of+fintech+companies&title=Special%3ASearch&ns0=1",
     "saas": "https://en.wikipedia.org/wiki/List_of_software_companies",
 }
 
@@ -21,22 +21,33 @@ def extract_companies(url: str, industry: str):
     res = requests.get(url, timeout=10)
     soup = BeautifulSoup(res.text, "html.parser")
 
-    competitors = []
+    competitors = set()
 
-    for li in soup.select("li"):
-        name = clean(li.get_text())
-        if len(name.split()) > 8 or len(name) < 3:
+    # Common Wikipedia patterns
+    for a in soup.select("div.mw-parser-output li a"):
+        name = clean(a.get_text())
+
+        # basic sanity filters
+        if not name:
+            continue
+        if len(name.split()) > 5:
+            continue
+        if any(char.isdigit() for char in name):
             continue
 
-        competitors.append({
+        competitors.add(name)
+
+    return [
+        {
             "name": name,
             "industry": industry,
             "problem": "industry-specific problem",
             "solution": "industry-specific solution",
             "positioning": "Not specified"
-        })
+        }
+        for name in competitors
+    ]
 
-    return competitors
 
 
 def main():
