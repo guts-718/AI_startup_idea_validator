@@ -11,10 +11,6 @@ from ai_startup_idea_validator.tools.cost_model_tool import cost_model_tool, Cos
 from ai_startup_idea_validator.tools.semantic_matcher import semantic_matcher
 
 
-
-
-
-
 @dataclass
 class EvidenceBundle:
     market_size: MarketSizeResult
